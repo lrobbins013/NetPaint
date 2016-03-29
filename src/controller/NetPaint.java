@@ -147,9 +147,9 @@ public class NetPaint extends JFrame {
 		public boolean isMouseClicked() {
 			return isClicked;
 		}
-
+		
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mousePressed(MouseEvent e) {
 			if (isClicked) {
 				isClicked = false;
 				NetPaint.this.panel.addCurrentObjToList();
@@ -188,17 +188,17 @@ public class NetPaint extends JFrame {
 		}
 		
 		@Override
+		public void mouseClicked(MouseEvent e) {
+			// Unimplemented
+		}
+		
+		@Override
 		public void mouseEntered(MouseEvent e) {
 			// Unimplemented
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// Unimplemented
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
 			// Unimplemented
 		}
 
