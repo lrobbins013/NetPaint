@@ -1,9 +1,10 @@
 package view;
 
 import java.awt.Graphics;
+
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JPanel;
 
@@ -15,7 +16,7 @@ public class NetPaintPanel extends JPanel {
 	private PaintObject currentObject;
 	
 	public NetPaintPanel() {
-		drawings = new ArrayList<PaintObject>();
+		drawings = new Vector<PaintObject>();
 		currentObject = null;
 	}
 	
