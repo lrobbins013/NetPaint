@@ -20,7 +20,7 @@ public class Server {
 
 	private static ServerSocket sock;
 	private static List<ObjectOutputStream> clients = Collections
-			.synchronizedList(new ArrayList<>());
+			.synchronizedList(new ArrayList<ObjectOutputStream>());
 	
 	public static void main(String[] args) throws IOException {
 		sock = new ServerSocket(SERVER_PORT);
