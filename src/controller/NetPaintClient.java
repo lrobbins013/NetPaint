@@ -174,8 +174,10 @@ public class NetPaintClient extends JFrame {
 			this.os = new ObjectOutputStream(socket.getOutputStream());
 			this.is = new ObjectInputStream(socket.getInputStream());
 			this.panel.updateDrawing((Vector<PaintObject>)is.readObject());
+			System.out.println("Connected to server \"" + ADDRESS + "\" on socket " + Server.SERVER_PORT);
 		} catch (IOException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(NetPaintClient.this, "No server found. Exiting...");
+			System.exit(0);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -240,7 +242,6 @@ public class NetPaintClient extends JFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
-				System.out.println("Mouse unclicked");
 			} 
 			else if (NetPaintClient.this.currentObjectType != null){
 				isClicked = true;
@@ -270,7 +271,9 @@ public class NetPaintClient extends JFrame {
 					default:
 						break;
 				}
-				System.out.println("Mouse clicked");
+			}
+			else {
+				JOptionPane.showMessageDialog(NetPaintClient.this, "Please select an shape to draw.");
 			}
 		}
 		
@@ -300,10 +303,7 @@ public class NetPaintClient extends JFrame {
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
 			if (NetPaintClient.this.mouseListener.isMouseClicked()) {
-				int x = arg0.getX();
-				int y = arg0.getY();
-				
-				NetPaintClient.this.panel.changeCurrentObjSize(x, y);
+				NetPaintClient.this.panel.changeCurrentObjSize(arg0.getX(), arg0.getY());
 			}
 		}
 
