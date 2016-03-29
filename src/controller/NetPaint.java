@@ -125,7 +125,7 @@ public class NetPaint extends JFrame {
 	}
 	
 	private void setupColorChooser() {
-		JColorChooser colorChooser = new JColorChooser(Color.BLACK);
+		colorChooser = new JColorChooser(Color.BLACK);
 		colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
