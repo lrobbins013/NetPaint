@@ -186,8 +186,6 @@ public class NetPaint extends JFrame {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void run() {
-			// TODO 9: Repeatedly accept String objects from the server and add
-			// them to our model.
 			
 			try {
 				while (true) {
@@ -213,7 +211,6 @@ public class NetPaint extends JFrame {
 			try {
 				socket.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
