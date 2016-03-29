@@ -14,8 +14,12 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import model.Line;
 import model.ObjectType;
@@ -33,10 +37,11 @@ public class NetPaint extends JFrame {
 	
 	private NetPaintPanel panel;
 	private ObjectType currentObjectType;
-	private Color currentColor;
 	private NetPaintMouseListener mouseListener;
 	private NetPaintMouseMotionListener motionListener;
 	private Image image;
+	private JColorChooser colorChooser;
+	private Color currentColor;
 	
 	public NetPaint() {
 		this.setVisible(true);
@@ -45,18 +50,12 @@ public class NetPaint extends JFrame {
 		this.setTitle("NetPaint");
 		
 		currentColor = Color.BLACK;
-		currentObjectType = ObjectType.RECTANGLE;
 		
 		setupButtons();
 		
-		panel = new NetPaintPanel();
-		panel.setPreferredSize(new Dimension(600, 500));
-		mouseListener = new NetPaintMouseListener();
-		motionListener = new NetPaintMouseMotionListener();
-		panel.addMouseListener(mouseListener);
-		panel.addMouseMotionListener(motionListener);
+		setupDrawingPanel();
 		
-		this.add(panel, BorderLayout.SOUTH);
+		setupColorChooser();
 		
 		try {
 			image = ImageIO.read(new File("./images/doge.jpeg"));
@@ -67,8 +66,6 @@ public class NetPaint extends JFrame {
 	
 	private void setupButtons() {
 		JPanel buttonPanel = new JPanel();
-		
-		
 		
 		JButton rectButton = new JButton();
 		rectButton.addActionListener(new ActionListener() {
@@ -115,6 +112,30 @@ public class NetPaint extends JFrame {
 		this.add(buttonPanel, BorderLayout.NORTH);
 	}
 	
+	private void setupDrawingPanel() {
+		panel = new NetPaintPanel();
+		panel.setPreferredSize(new Dimension(600, 600));
+		mouseListener = new NetPaintMouseListener();
+		motionListener = new NetPaintMouseMotionListener();
+		panel.addMouseListener(mouseListener);
+		panel.addMouseMotionListener(motionListener);
+		
+		JScrollPane scrollPane = new JScrollPane(panel);
+		this.add(scrollPane, BorderLayout.CENTER);
+	}
+	
+	private void setupColorChooser() {
+		JColorChooser colorChooser = new JColorChooser(Color.BLACK);
+		colorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				currentColor = colorChooser.getColor();
+			}
+		});
+		colorChooser.setPreviewPanel(new JPanel());
+		this.add(colorChooser, BorderLayout.SOUTH);
+	}
+	
 	private class NetPaintMouseListener implements MouseListener {
 		
 		private boolean isClicked;
@@ -134,7 +155,7 @@ public class NetPaint extends JFrame {
 				NetPaint.this.panel.addCurrentObjToList();
 				System.out.println("Mouse unclicked");
 			} 
-			else {
+			else if (NetPaint.this.currentObjectType != null){
 				isClicked = true;
 				int x, y;
 				switch(NetPaint.this.currentObjectType) {
