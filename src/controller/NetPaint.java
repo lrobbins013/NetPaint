@@ -201,6 +201,12 @@ public class NetPaint extends JFrame {
 		}
 	}
 
+	/**
+	 * Closes the socket and cleans up NetPaint.
+	 * 
+	 * @param message
+	 * 		A String to print when the socket is closed.
+	 */
 	public void cleanUpAndQuit(String message) {
 		JOptionPane.showMessageDialog(NetPaint.this, message);
 		if (socket != null) {
