@@ -78,8 +78,6 @@ public class NetPaint extends JFrame {
 		
 		currentColor = Color.BLACK;
 		
-		
-		
 		setupButtons();
 		
 		setupDrawingPanel();
@@ -171,9 +169,7 @@ public class NetPaint extends JFrame {
 	
 	@SuppressWarnings("unchecked")
 	private void openConnection() {
-		/* Our server is on our computer, but make sure to use the same port. */
 		try {
-			// TODO 6: Connect to the Server
 			this.socket = new Socket(ADDRESS, Server.SERVER_PORT);
 			this.os = new ObjectOutputStream(socket.getOutputStream());
 			this.is = new ObjectInputStream(socket.getInputStream());
@@ -181,7 +177,6 @@ public class NetPaint extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
