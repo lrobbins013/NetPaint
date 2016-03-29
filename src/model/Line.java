@@ -3,12 +3,13 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Line implements PaintObject {
+public class Line extends PaintObject {
 	
 	private int x1, y1, x2, y2;
 	private Color color;
 	
 	public Line (int x1, int y1, int x2, int y2, Color color) {
+		super();
 		this.x1 = x1;
 		this.y1 = y1;
 		this.x2 = x2;

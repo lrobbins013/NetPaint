@@ -115,6 +115,7 @@ public class NetPaint extends JFrame {
 	private void setupDrawingPanel() {
 		panel = new NetPaintPanel();
 		panel.setPreferredSize(new Dimension(600, 600));
+		panel.setBackground(Color.WHITE);
 		mouseListener = new NetPaintMouseListener();
 		motionListener = new NetPaintMouseMotionListener();
 		panel.addMouseListener(mouseListener);

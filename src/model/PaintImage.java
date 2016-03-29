@@ -3,12 +3,13 @@ package model;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
-public class PaintImage implements PaintObject {
+public class PaintImage extends PaintObject {
 	
 	private Image image;
 	private int initX, initY, x, y, width, height;
 	
 	public PaintImage (Image image, int x, int y, int width, int height) {
+		super();
 		this.image = image;
 		this.initX = x;
 		this.initY = y;

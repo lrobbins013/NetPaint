@@ -3,12 +3,13 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Oval implements PaintObject {
+public class Oval extends PaintObject {
 	
 	private int initX, initY, x, y, width, height;
 	private Color color;
 	
 	public Oval (int x, int y, int width, int height, Color color) {
+		super();
 		this.initX = x;
 		this.initY = y;
 		this.x = x;

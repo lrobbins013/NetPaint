@@ -2,13 +2,15 @@ package model;
 
 import java.awt.Graphics2D;
 
-public interface PaintObject {
+public abstract class PaintObject {
 	
-	public void changeSize(int newParam1, int newParam2);
+	private int x, y;
 	
-	public void draw(Graphics2D g2);
+	public abstract void changeSize(int newParam1, int newParam2);
 	
-	public int getX();
+	public abstract void draw(Graphics2D g2);
 	
-	public int getY();
+	public abstract int getX();
+	
+	public abstract int getY();
 }

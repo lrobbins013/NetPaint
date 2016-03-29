@@ -3,12 +3,13 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Rectangle implements PaintObject {
+public class Rectangle extends PaintObject {
 	
 	private int initX, initY, x, y, width, height;
 	private Color color;
 	
 	public Rectangle (int x, int y, int width, int height, Color color) {
+		super();
 		this.initX = x;
 		this.initY = y;
 		this.x = x;
