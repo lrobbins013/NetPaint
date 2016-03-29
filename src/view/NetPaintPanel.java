@@ -86,11 +86,23 @@ public class NetPaintPanel extends JPanel {
 		repaint();
 	}
 	
+	/**
+	 * Updates the Vector of PaintObjects to be drawn and repaints the panel.
+	 * 
+	 * @param newDrawings
+	 * 		The updated Vector of PaintObjects
+	 */
 	public void updateDrawing(Vector<PaintObject> newDrawings) {
 		this.drawings = newDrawings;
 		repaint();
 	}
 	
+	/**
+	 * Gets the current Vector of PaintObjects and returns it.
+	 * 
+	 * @return
+	 * 		A Vector of PaintObjects to be drawn.
+	 */
 	public Vector<PaintObject> getDrawing() {
 		return drawings;
 	}

@@ -11,12 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Vector;
-
 import model.PaintObject;
-
-
-
-
 
 /**
  * The server for NetPaint.
@@ -35,6 +30,10 @@ public class Server {
 	private static ServerSocket sock;
 	private static List<ObjectOutputStream> clients = Collections
 			.synchronizedList(new ArrayList<ObjectOutputStream>());
+	
+	/**
+	 * Vector holding the PaintObjects that are to be drawn to each client.
+	 */
 	public static Vector<PaintObject> drawings = new Vector<PaintObject>();
 	
 	/**
