@@ -80,7 +80,6 @@ class ClientHandler extends Thread {
 			}
 
 			this.writeVectorToClients(drawings);
-
 		}
 
 	}
