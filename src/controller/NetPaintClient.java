@@ -42,7 +42,7 @@ import view.NetPaintPanel;
  * @author Ana Huff
  *
  */
-public class NetPaint extends JFrame {
+public class NetPaintClient extends JFrame {
 	
 	private static final String ADDRESS = "localhost";
 
@@ -53,7 +53,7 @@ public class NetPaint extends JFrame {
 	 * 		An array of Strings.
 	 */
 	public static void main(String[] args) {
-		JFrame netPaintGUI = new NetPaint();
+		JFrame netPaintGUI = new NetPaintClient();
 		netPaintGUI.setVisible(true);
 	}
 	
@@ -71,7 +71,7 @@ public class NetPaint extends JFrame {
 	/**
 	 * Initializes the new GUI.
 	 */
-	public NetPaint() {
+	public NetPaintClient() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 600);
 		this.setTitle("NetPaint");
@@ -189,12 +189,12 @@ public class NetPaint extends JFrame {
 			
 			try {
 				while (true) {
-					NetPaint.this.panel.updateDrawing((Vector<PaintObject>) is.readObject());
+					NetPaintClient.this.panel.updateDrawing((Vector<PaintObject>) is.readObject());
 				}
 			} catch (IOException e) {
-				NetPaint.this.cleanUpAndQuit("The server hung up on us-- Exiting...");
+				NetPaintClient.this.cleanUpAndQuit("The server hung up on us-- Exiting...");
 			} catch (ClassNotFoundException e) {
-				NetPaint.this.cleanUpAndQuit("Got something from server that wasn't a string...");
+				NetPaintClient.this.cleanUpAndQuit("Got something from server that wasn't a string...");
 			}
 		}
 	}
@@ -206,7 +206,7 @@ public class NetPaint extends JFrame {
 	 * 		A String to print when the socket is closed.
 	 */
 	public void cleanUpAndQuit(String message) {
-		JOptionPane.showMessageDialog(NetPaint.this, message);
+		JOptionPane.showMessageDialog(NetPaintClient.this, message);
 		if (socket != null) {
 			try {
 				socket.close();
@@ -215,7 +215,7 @@ public class NetPaint extends JFrame {
 			}
 		}
 		
-		NetPaint.this.dispatchEvent(new WindowEvent(NetPaint.this, WindowEvent.WINDOW_CLOSED));
+		NetPaintClient.this.dispatchEvent(new WindowEvent(NetPaintClient.this, WindowEvent.WINDOW_CLOSED));
 	}
 	
 	private class NetPaintMouseListener implements MouseListener {
@@ -234,38 +234,38 @@ public class NetPaint extends JFrame {
 		public void mousePressed(MouseEvent e) {
 			if (isClicked) {
 				isClicked = false;
-				NetPaint.this.panel.addCurrentObjToList();
+				NetPaintClient.this.panel.addCurrentObjToList();
 				try {
-					NetPaint.this.os.writeObject(NetPaint.this.panel.getDrawing());
+					NetPaintClient.this.os.writeObject(NetPaintClient.this.panel.getDrawing());
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
 				System.out.println("Mouse unclicked");
 			} 
-			else if (NetPaint.this.currentObjectType != null){
+			else if (NetPaintClient.this.currentObjectType != null){
 				isClicked = true;
 				int x, y;
-				switch(NetPaint.this.currentObjectType) {
+				switch(NetPaintClient.this.currentObjectType) {
 					case RECTANGLE:
 						x = e.getX();
 						y = e.getY();
-						NetPaint.this.panel.newCurrentObject(new Rectangle(x, y, 0, 0, NetPaint.this.currentColor));
+						NetPaintClient.this.panel.newCurrentObject(new Rectangle(x, y, 0, 0, NetPaintClient.this.currentColor));
 						System.out.println("ayy");
 						break;
 					case OVAL:
 						x = e.getX();
 						y = e.getY();
-						NetPaint.this.panel.newCurrentObject(new Oval(x, y, 0, 0, NetPaint.this.currentColor));
+						NetPaintClient.this.panel.newCurrentObject(new Oval(x, y, 0, 0, NetPaintClient.this.currentColor));
 						break;
 					case LINE:
 						x = e.getX();
 						y = e.getY();
-						NetPaint.this.panel.newCurrentObject(new Line(x, y, x, y, NetPaint.this.currentColor));
+						NetPaintClient.this.panel.newCurrentObject(new Line(x, y, x, y, NetPaintClient.this.currentColor));
 						break;
 					case PAINT_IMAGE:
 						x = e.getX();
 						y = e.getY();
-						NetPaint.this.panel.newCurrentObject(new PaintImage(NetPaint.this.image, x, y, 0, 0));
+						NetPaintClient.this.panel.newCurrentObject(new PaintImage(NetPaintClient.this.image, x, y, 0, 0));
 						break;
 					default:
 						break;
@@ -299,11 +299,11 @@ public class NetPaint extends JFrame {
 		
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
-			if (NetPaint.this.mouseListener.isMouseClicked()) {
+			if (NetPaintClient.this.mouseListener.isMouseClicked()) {
 				int x = arg0.getX();
 				int y = arg0.getY();
 				
-				NetPaint.this.panel.changeCurrentObjSize(x, y);
+				NetPaintClient.this.panel.changeCurrentObjSize(x, y);
 			}
 		}
 
