@@ -40,7 +40,7 @@ public class Oval implements PaintObject {
 	@Override
 	public void draw(Graphics2D g2) {
 		g2.setColor(color);
-		g2.drawOval(x, y, width, height);
+		g2.fillOval(x, y, width, height);
 	}
 	
 	public int getX() {
