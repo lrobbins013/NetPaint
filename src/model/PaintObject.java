@@ -13,7 +13,6 @@ import java.io.Serializable;
 public abstract class PaintObject implements Serializable {
 	
 	private static final long serialVersionUID = -3089051455706162523L;
-	//private int x, y;
 	
 	/**
 	 * Holds the new x and y values of the PaintObject.
