@@ -6,7 +6,15 @@ import java.io.Serializable;
 
 import javax.swing.ImageIcon;
 
-
+/**
+ * The PaintImage type of PaintObject. Holds the image that will be drawn
+ * when it is called. Also holds the  initial value for x and y, the changing
+ * value for x and y, and the width and height of the image.
+ * 
+ * @author Lucas Robbins
+ * @author Ana Huff
+ *
+ */
 public class PaintImage extends PaintObject implements Serializable{
 	
 	private static final long serialVersionUID = -3280984178883701076L;
@@ -14,6 +22,22 @@ public class PaintImage extends PaintObject implements Serializable{
 	private ImageIcon image;
 	private int initX, initY, x, y, width, height;
 	
+	/**
+	 * Creates a new PaintImage by setting the instance variables for the new
+	 * PaintImage given the image, initial x and y value, width, and height of
+	 * the PaintImage.
+	 * 
+	 * @param image
+	 * 		The image that is to be drawn.
+	 * @param x
+	 * 		The initial x value of the image.
+	 * @param y
+	 * 		The initial y value of the image.
+	 * @param width
+	 * 		The width of the image.
+	 * @param height
+	 * 		The height of the image.
+	 */
 	public PaintImage (Image image, int x, int y, int width, int height) {
 		super();
 		this.image = new ImageIcon(image);

@@ -35,10 +35,23 @@ import model.PaintObject;
 import model.Rectangle;
 import view.NetPaintPanel;
 
+/**
+ * The GUI controller for NetPaint.
+ * 
+ * @author Lucas Robbins
+ * @author Ana Huff
+ *
+ */
 public class NetPaint extends JFrame {
 	
 	private static final String ADDRESS = "localhost";
 
+	/**
+	 * Creates a new GUI by initializing netPaintGUI.
+	 * 
+	 * @param args
+	 * 		An array of Strings.
+	 */
 	public static void main(String[] args) {
 		JFrame netPaintGUI = new NetPaint();
 		netPaintGUI.setVisible(true);
@@ -55,6 +68,9 @@ public class NetPaint extends JFrame {
 	private ObjectInputStream is;
 	private ObjectOutputStream os;
 	
+	/**
+	 * Initializes the new GUI.
+	 */
 	public NetPaint() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 600);

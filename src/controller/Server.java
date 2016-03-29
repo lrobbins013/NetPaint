@@ -16,8 +16,20 @@ import model.PaintObject;
 
 
 
+
+
+/**
+ * The server for NetPaint.
+ * 
+ * @author Lucas Robbins
+ * @author Ana Huff
+ *
+ */
 public class Server {
 
+	/**
+	 * The server port that will be connected to.
+	 */
 	public static final int SERVER_PORT = 9001;
 
 	private static ServerSocket sock;
@@ -25,6 +37,14 @@ public class Server {
 			.synchronizedList(new ArrayList<ObjectOutputStream>());
 	public static Vector<PaintObject> drawings = new Vector<PaintObject>();
 	
+	/**
+	 * Initializes the new Server for NetPaint.
+	 * 
+	 * @param args
+	 * 		An array of Strings.
+	 * @throws IOException
+	 * 		An exception that is thrown.
+	 */
 	public static void main(String[] args) throws IOException {
 		sock = new ServerSocket(SERVER_PORT);
 		
