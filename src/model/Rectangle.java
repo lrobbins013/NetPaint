@@ -2,8 +2,11 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Rectangle extends PaintObject {
+public class Rectangle extends PaintObject implements Serializable {
+	
+	private static final long serialVersionUID = -3785348301934116416L;
 	
 	private int initX, initY, x, y, width, height;
 	private Color color;

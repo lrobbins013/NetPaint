@@ -3,7 +3,6 @@ package view;
 import java.awt.Graphics;
 
 import java.awt.Graphics2D;
-import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JPanel;
@@ -12,7 +11,7 @@ import model.PaintObject;
 
 public class NetPaintPanel extends JPanel {
 	
-	private List<PaintObject> drawings;
+	private Vector<PaintObject> drawings;
 	private PaintObject currentObject;
 	
 	public NetPaintPanel() {
@@ -46,6 +45,15 @@ public class NetPaintPanel extends JPanel {
 	public void changeCurrentObjSize(int newParam1, int newParam2) {
 		this.currentObject.changeSize(newParam1, newParam2);
 		repaint();
+	}
+	
+	public void updateDrawing(Vector<PaintObject> newDrawings) {
+		this.drawings = newDrawings;
+		repaint();
+	}
+	
+	public Vector<PaintObject> getDrawing() {
+		return drawings;
 	}
 	
 	public void paintComponent(Graphics g) {

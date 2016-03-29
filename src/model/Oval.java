@@ -2,8 +2,11 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Oval extends PaintObject {
+public class Oval extends PaintObject implements Serializable  {
+	
+	private static final long serialVersionUID = 2863392193793071043L;
 	
 	private int initX, initY, x, y, width, height;
 	private Color color;

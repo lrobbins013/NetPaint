@@ -2,8 +2,11 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public class Line extends PaintObject {
+public class Line extends PaintObject implements Serializable {
+	
+	private static final long serialVersionUID = 6687497440059856130L;
 	
 	private int x1, y1, x2, y2;
 	private Color color;

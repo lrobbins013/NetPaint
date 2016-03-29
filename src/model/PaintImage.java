@@ -2,15 +2,21 @@ package model;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.Serializable;
 
-public class PaintImage extends PaintObject {
+import javax.swing.ImageIcon;
+
+
+public class PaintImage extends PaintObject implements Serializable{
 	
-	private Image image;
+	private static final long serialVersionUID = -3280984178883701076L;
+	
+	private ImageIcon image;
 	private int initX, initY, x, y, width, height;
 	
 	public PaintImage (Image image, int x, int y, int width, int height) {
 		super();
-		this.image = image;
+		this.image = new ImageIcon(image);
 		this.initX = x;
 		this.initY = y;
 		this.x = x;
@@ -40,7 +46,7 @@ public class PaintImage extends PaintObject {
 	
 	@Override
 	public void draw(Graphics2D g2) {
-		g2.drawImage(image, x, y, width, height, null);
+		g2.drawImage(image.getImage(), x, y, width, height, null);
 	}
 	
 	public int getX() {

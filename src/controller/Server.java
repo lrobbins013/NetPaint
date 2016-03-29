@@ -14,6 +14,8 @@ import java.util.Vector;
 
 import model.PaintObject;
 
+
+
 public class Server {
 
 	public static final int SERVER_PORT = 9001;
@@ -21,6 +23,7 @@ public class Server {
 	private static ServerSocket sock;
 	private static List<ObjectOutputStream> clients = Collections
 			.synchronizedList(new ArrayList<ObjectOutputStream>());
+	public static Vector<PaintObject> drawings = new Vector<PaintObject>();
 	
 	public static void main(String[] args) throws IOException {
 		sock = new ServerSocket(SERVER_PORT);
@@ -32,6 +35,10 @@ public class Server {
 			ObjectInputStream is = new ObjectInputStream(s.getInputStream());
 			ObjectOutputStream os = new ObjectOutputStream(s.getOutputStream());
 
+			// Write the current image stored on the server to the new client
+			os.writeObject(drawings);
+			os.reset();
+			
 			// TODO 2: Save the output stream to our clients list so we can
 			// broadcast to this client later
 			clients.add(os);
@@ -51,6 +58,7 @@ class ClientHandler extends Thread {
 
 	private ObjectInputStream input;
 	private List<ObjectOutputStream> clients;
+	public List<PaintObject> drawings;
 
 	public ClientHandler(ObjectInputStream input,
 			List<ObjectOutputStream> clients) {
@@ -62,12 +70,10 @@ class ClientHandler extends Thread {
 	@Override
 	public void run() {
 		while (true) {
-
-			Vector<PaintObject> drawings = null;
-
+			
 			// TODO 4: Read a String from the client
 			try {
-				drawings = (Vector<PaintObject>)input.readObject();
+				Server.drawings = (Vector<PaintObject>)input.readObject();
 			} catch (ClassNotFoundException e) {
 				// This one is probably a bug
 				e.printStackTrace();
@@ -79,7 +85,7 @@ class ClientHandler extends Thread {
 				return;
 			}
 
-			this.writeVectorToClients(drawings);
+			this.writeVectorToClients(Server.drawings);
 		}
 
 	}

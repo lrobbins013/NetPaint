@@ -1,10 +1,12 @@
 package model;
 
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public abstract class PaintObject {
+public abstract class PaintObject implements Serializable {
 	
-	private int x, y;
+	private static final long serialVersionUID = -3089051455706162523L;
+	//private int x, y;
 	
 	public abstract void changeSize(int newParam1, int newParam2);
 	

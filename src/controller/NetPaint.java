@@ -9,13 +9,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ChangeEvent;
@@ -25,10 +31,13 @@ import model.Line;
 import model.ObjectType;
 import model.Oval;
 import model.PaintImage;
+import model.PaintObject;
 import model.Rectangle;
 import view.NetPaintPanel;
 
 public class NetPaint extends JFrame {
+	
+	private static final String ADDRESS = "localhost";
 
 	public static void main(String[] args) {
 		JFrame netPaintGUI = new NetPaint();
@@ -42,14 +51,18 @@ public class NetPaint extends JFrame {
 	private Image image;
 	private JColorChooser colorChooser;
 	private Color currentColor;
+	private Socket socket;
+	private ObjectInputStream is;
+	private ObjectOutputStream os;
 	
 	public NetPaint() {
-		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 600);
 		this.setTitle("NetPaint");
 		
 		currentColor = Color.BLACK;
+		
+		
 		
 		setupButtons();
 		
@@ -62,6 +75,9 @@ public class NetPaint extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		openConnection();
+		new ServerListener().start();
 	}
 	
 	private void setupButtons() {
@@ -137,6 +153,57 @@ public class NetPaint extends JFrame {
 		this.add(colorChooser, BorderLayout.SOUTH);
 	}
 	
+	@SuppressWarnings("unchecked")
+	private void openConnection() {
+		/* Our server is on our computer, but make sure to use the same port. */
+		try {
+			// TODO 6: Connect to the Server
+			this.socket = new Socket(ADDRESS, Server.SERVER_PORT);
+			this.os = new ObjectOutputStream(socket.getOutputStream());
+			this.is = new ObjectInputStream(socket.getInputStream());
+			this.panel.updateDrawing((Vector<PaintObject>)is.readObject());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private class ServerListener extends Thread {
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public void run() {
+			// TODO 9: Repeatedly accept String objects from the server and add
+			// them to our model.
+			
+			try {
+				while (true) {
+					NetPaint.this.panel.updateDrawing((Vector<PaintObject>) is.readObject());
+				}
+			} catch (IOException e) {
+				NetPaint.this.cleanUpAndQuit("The server hung up on us-- Exiting...");
+			} catch (ClassNotFoundException e) {
+				NetPaint.this.cleanUpAndQuit("Got something from server that wasn't a string...");
+			}
+		}
+	}
+
+	public void cleanUpAndQuit(String message) {
+		JOptionPane.showMessageDialog(NetPaint.this, message);
+		if (socket != null) {
+			try {
+				socket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		NetPaint.this.dispatchEvent(new WindowEvent(NetPaint.this, WindowEvent.WINDOW_CLOSED));
+	}
+	
 	private class NetPaintMouseListener implements MouseListener {
 		
 		private boolean isClicked;
@@ -154,6 +221,11 @@ public class NetPaint extends JFrame {
 			if (isClicked) {
 				isClicked = false;
 				NetPaint.this.panel.addCurrentObjToList();
+				try {
+					NetPaint.this.os.writeObject(NetPaint.this.panel.getDrawing());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				System.out.println("Mouse unclicked");
 			} 
 			else if (NetPaint.this.currentObjectType != null){
